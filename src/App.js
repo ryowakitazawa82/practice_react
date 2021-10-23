@@ -1,23 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import {useState} from 'react';
+import { List } from "./List";
+import { Form } from "./Form";
+import { LANGUAGES } from "./const/languages";
 
 function App() {
+  const [tab, setTab] = useState('list');
+  const [langs, setLangs] = useState(LANGUAGES);
+
+  const addLang = (lang) => {
+    console.log(lang);
+    setLangs([...langs, lang])
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div>
+      <header>
+        <ul>
+          <li onClick={() => setTab('list')}>リスト</li>
+          <li onClick={() => setTab('form')}>フォーム</li>
+        </ul>
       </header>
+      <hr/>
+      {
+
+        tab === 'list' ? <List />: <Form onAddLang={addLang}/>
+      }
     </div>
   );
 }

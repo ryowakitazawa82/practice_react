@@ -1,8 +1,9 @@
 import styled from 'styled-components';
-import {useState} from 'react';
+import { useState } from 'react';
 import { List } from "./List";
 import { Form } from "./Form";
-import { LANGUAGES } from "./const/languages";
+import { getLanguages } from "./const/languages";
+import { withLoading } from "./hoc/withLoading";
 
 const Header = styled.header`
 display: flex;
@@ -24,14 +25,14 @@ cursor: pointer;
 border-bottom: ${props => props.forcused ? '2px solid #F44336' : 'none'};
 `
 
-function App() {
+function App({ data }) {
   const [tab, setTab] = useState('list');
-  const [langs, setLangs] = useState(LANGUAGES);
+  const [langs, setLangs] = useState(data);
 
   const addLang = (lang) => {
-    setLangs([...langs, lang])
+    setLangs([...langs, lang]);
     setTab('list');
-  }
+  };
 
   return (
     <div>
@@ -49,4 +50,4 @@ function App() {
   );
 }
 
-export default App;
+export default withLoading(App, getLanguages);
